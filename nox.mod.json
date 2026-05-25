@@ -3,7 +3,7 @@
   "id": "nox.players",
   "provides": [
     "fr.hactazia.player",
-    "player"
+    "players"
   ],
   "name": "Player",
   "version": "1.0.0",
@@ -22,11 +22,5 @@
       "email": "hactazia@gmail.com",
       "website": "https://hactazia.fr/"
     }
-  ],
-  "contributors": [],
-  "relations": [],
-  "entrypoints": {},
-  "references": [],
-  
-  "permissions": []
+  ]
 }
