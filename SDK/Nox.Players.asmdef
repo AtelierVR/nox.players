@@ -1,0 +1,20 @@
+{
+  "name": "Nox.Players",
+  "rootNamespace": "",
+  "references": [
+    "Nox.Entities",
+    "Nox.Users",
+    "Nox.CCK",
+    "Nox.Avatars",
+    "UniTask"
+  ],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": true,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
+}

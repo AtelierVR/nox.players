@@ -1,0 +1,20 @@
+﻿{
+    "name": "Nox.Mods.Players",
+    "rootNamespace": "",
+    "references": [
+        "Nox.CCK",
+        "Nox.Entities",
+        "UniTask",
+        "Unity.InputSystem",
+        "Nox.KeyBinding"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

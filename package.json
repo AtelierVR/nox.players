@@ -1,0 +1,6 @@
+﻿{
+  "name": "nox.players",
+  "displayName": "Nox - Player",
+  "version": "1.0.0",
+  "description": "API for player state, lifecycle, and in-game actions."
+}
