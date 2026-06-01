@@ -1,6 +1,5 @@
 using Nox.CCK.Utils;
 using Nox.Entities;
-using Nox.Users;
 using UnityEngine;
 
 namespace Nox.Players {
