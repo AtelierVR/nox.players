@@ -22,5 +22,19 @@
       "email": "hactazia@gmail.com",
       "website": "https://hactazia.fr/"
     }
+  ],
+  "relations": [
+    {
+      "id": "nox.entities",
+      "type": "depends",
+      "version": ">=1.0.0",
+      "register": "git+https://github.com/AtelierVR/nox.entities.git"
+    },
+    {
+      "id": "nox.cck",
+      "type": "depends",
+      "version": ">=1.0.0",
+      "register": "git+https://github.com/AtelierVR/nox.cck.git"
+    }
   ]
 }

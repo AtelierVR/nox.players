@@ -1,4 +1,3 @@
-using Nox.Avatars;
 using Nox.Entities;
 
 namespace Nox.Players {
