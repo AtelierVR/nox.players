@@ -1,5 +1,4 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <linker>
-	<assembly fullname="Nox.Mods.Players" preserve="all" />
 	<assembly fullname="Nox.Players" preserve="all" />
 </linker>
