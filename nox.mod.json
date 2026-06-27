@@ -35,6 +35,23 @@
       "type": "depends",
       "version": ">=1.0.0",
       "register": "git+https://github.com/AtelierVR/nox.cck.git"
+    },
+    {
+      "id": "tables",
+      "type": "depends",
+      "version": ">=1.0.0",
+      "register": "git+https://github.com/AtelierVR/nox.tables.git"
     }
-  ]
+  ],
+  "constraints": [
+    {
+      "type": "after",
+      "id": "tables"
+    }
+  ],
+  "entrypoints": {
+    "main": [
+      "Nox.Players.Runtime.Main"
+    ]
+  }
 }
