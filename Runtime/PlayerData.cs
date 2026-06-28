@@ -43,8 +43,8 @@ namespace Nox.Players.Runtime {
 			=> Path.Combine(Main.CoreAPI.ConfigAPI.GetFolder(), "data");
 
 		public PlayerData(Identifier id) {
-			_filePath = Path.Combine(BaseDir, $"{id}.json");
-			_tableKey = $"players.{id}";
+			_filePath = Path.Combine(BaseDir, $"{id.ToShortString()}.json");
+			_tableKey = $"players.{id.ToShortString()}";
 
 			// Ask if a head already exists for this player
 			PlayerData found = null;
