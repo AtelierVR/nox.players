@@ -196,6 +196,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Nox.CCK.Network::Nox.CCK.Network.NetworkImage
   _url: 
   _sizeMultiplier: 4
+  _onSuccess:
+    m_PersistentCalls:
+      m_Calls: []
+  _onError:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &2155285321325876868
 GameObject:
   m_ObjectHideFlags: 0
@@ -396,7 +402,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 285.08322, y: -32}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 64, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &6929402836756837050
 MonoBehaviour:
@@ -946,6 +952,7 @@ GameObject:
   - component: {fileID: 3001215450349644719}
   - component: {fileID: 9132451721170420473}
   - component: {fileID: 8814839085568690631}
+  - component: {fileID: 5461771153304164599}
   m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
@@ -1010,6 +1017,26 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &5461771153304164599
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8791318749406592845}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f59cd1634d9964047b4f6c2b99ccd1c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Nox.CCK.Network::Nox.CCK.Network.NetworkImage
+  _url: 
+  _sizeMultiplier: 4
+  _onSuccess:
+    m_PersistentCalls:
+      m_Calls: []
+  _onError:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &4272538018377976065
 PrefabInstance:
   m_ObjectHideFlags: 0
