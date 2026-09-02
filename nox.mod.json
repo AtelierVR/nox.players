@@ -6,7 +6,7 @@
     "players"
   ],
   "name": "Player",
-  "version": "1.0.0",
+  "version": "1.0.x",
   "description": "API for player state, lifecycle, and in-game actions.",
   "license": "GPL-3.0",
   "icon": null,
