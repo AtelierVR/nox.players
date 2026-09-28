@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Nox.CCK.Events;
 using Nox.CCK.Utils;
+using Nox.Entities;
 using Nox.Tables;
 
 namespace Nox.Players.Runtime {
@@ -19,35 +20,51 @@ namespace Nox.Players.Runtime {
 	/// Children delegate all writes to the head. When the head is disposed,
 	/// the next child takes over.
 	/// </para>
+	/// <para>
+	/// <see cref="Main.Get(Identifier)"/> caches one instance per player for the application
+	/// lifetime, so the very same store is handed out across sessions; the chain only matters for
+	/// instances built outside that cache.
+	/// </para>
 	/// </summary>
-	public sealed class PlayerData : IPlayerData, IDisposable {
+	public sealed class PersistentData : IDataContainer {
 		private readonly string _filePath;
 		private readonly string _tableKey;
 		private JObject _data;
 		private DateTime _localMtime;
+
+		/// <summary>
+		/// Number of holders. The instance stays alive in <see cref="Main"/> regardless; the counter only
+		/// decides when the last holder leaves and the pending save must be flushed.
+		/// </summary>
+		private int _refs;
 
 		private CancellationTokenSource _saveCts;
 		private const float SaveDelaySeconds = 5f;
 		private bool _isReady;
 
 		/// <summary>Next instance in the chain (set when this is the head and a new child joins).</summary>
-		private PlayerData _next;
+		private PersistentData _next;
 
 		/// <summary>The head for this player (null if this instance IS the head).</summary>
-		private PlayerData _head;
+		private PersistentData _head;
 
 		private bool IsHead
 			=> _head == null;
 
+		/// <summary>Short identifier key of the player this store belongs to (see <see cref="Main.Get"/>).</summary>
+		internal string Key { get; }
+
 		private static string BaseDir
 			=> Path.Combine(Main.CoreAPI.ConfigAPI.GetFolder(), "data");
 
-		public PlayerData(Identifier id) {
-			_filePath = Path.Combine(BaseDir, $"{id.ToShortString()}.json");
-			_tableKey = $"players.{id.ToShortString()}";
+		public PersistentData(Identifier id) {
+			var key   = id.ToShortString();
+			Key       = key;
+			_filePath = Path.Combine(BaseDir, $"{key}.json");
+			_tableKey = $"players.{key}";
 
 			// Ask if a head already exists for this player
-			PlayerData found = null;
+			PersistentData found = null;
 			Main.OnHeadExist.Invoke(_tableKey, (head) => found = head);
 
 			if (found != null) {
@@ -70,7 +87,7 @@ namespace Nox.Players.Runtime {
 		/// Called when a new instance fires <see cref="Main.OnHeadExist"/>.
 		/// If the key matches, respond with this instance as the head.
 		/// </summary>
-		private void OnHeadExistRequest(string key, Action<PlayerData> callback) {
+		private void OnHeadExistRequest(string key, Action<PersistentData> callback) {
 			if (key == _tableKey)
 				callback(this);
 		}
@@ -162,18 +179,39 @@ namespace Nox.Players.Runtime {
 			SyncToTable().Forget();
 		}
 
-		public void Dispose() {
+		/// <summary>Registers one more holder; the store is disposed once every holder released it.</summary>
+		internal void Retain()
+			=> _refs++;
+
+		/// <summary>Releases one holder (reference count - 1).</summary>
+		public void Dispose()
+			=> Dispose(false);
+
+		/// <summary>
+		/// Releases one holder, or forces the teardown.
+		/// <para>
+		/// <paramref name="force"/> is used by <see cref="Main.OnDisposeMain"/> (the mod is going away):
+		/// the reference count is ignored and the store is torn down whatever the remaining holders are.
+		/// Otherwise one holder is released and the store is only torn down once the count drops to zero.
+		/// </para>
+		/// <para>
+		/// The instance itself stays cached in <see cref="Main"/>, so the very same store is handed out
+		/// again by the next <c>Get()</c> (same Persistent across sessions).
+		/// </para>
+		/// </summary>
+		internal void Dispose(bool force) {
+			if (!force && _refs > 0 && --_refs > 0)
+				return;
+
 			if (IsHead) {
 				Main.OnHeadExist.RemoveListener(OnHeadExistRequest);
 
-				// Flush pending save immediately
 				_saveCts?.Cancel();
 				_saveCts?.Dispose();
 				_saveCts = null;
 				SaveLocal();
 
 				if (_next != null) {
-					// Pass ownership to next child
 					_next._data = _data;
 					_next._localMtime = _localMtime;
 					_next._isReady = true;
@@ -181,7 +219,6 @@ namespace Nox.Players.Runtime {
 					Main.OnHeadExist.AddListener(_next.OnHeadExistRequest);
 				}
 			} else {
-				// Child: just cleanup local resources
 				_saveCts?.Cancel();
 				_saveCts?.Dispose();
 				_saveCts = null;

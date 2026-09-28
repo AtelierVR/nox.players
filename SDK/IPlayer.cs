@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Nox.Players {
 	public interface IPlayer : IPlayer<IPart> { }
 
-	public interface IPlayer<TPart> : ILivingEntity, IMovingEntity, IMultiPartEntity<TPart>
+	public interface IPlayer<TPart> : ILivingEntity, IMovingEntity, IMultiPartEntity<TPart>, ITeamEntity
 		where TPart : IPart {
 		/// <summary>
 		/// Get the display name of the player.
