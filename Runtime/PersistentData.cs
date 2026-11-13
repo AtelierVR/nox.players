@@ -5,9 +5,9 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Nox.CCK;
 using Nox.CCK.Events;
 using Nox.CCK.Utils;
-using Nox.Entities;
 using Nox.Tables;
 
 namespace Nox.Players.Runtime {
@@ -331,8 +331,8 @@ namespace Nox.Players.Runtime {
 			while (true) {
 				var propName = key[index];
 				if (index == key.Length - 1) {
-					root[propName] = value != null 
-						? JToken.FromObject(value) 
+					root[propName] = value != null
+						? JToken.FromObject(value)
 						: JValue.CreateNull();
 					return;
 				}

@@ -1,5 +1,5 @@
+using Nox.CCK;
 using Nox.CCK.Utils;
-using Nox.Entities;
 
 namespace Nox.Players {
 	/// <summary>

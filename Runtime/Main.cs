@@ -1,19 +1,19 @@
 using System;
 using System.Collections.Generic;
+using Nox.CCK;
 using Nox.CCK.Events;
 using Nox.CCK.Mods.Cores;
 using Nox.CCK.Mods.Initializers;
 using Nox.CCK.Utils;
-using Nox.Entities;
 using Nox.Tables;
 
 namespace Nox.Players.Runtime {
 	public class Main : IMainModInitializer, IPlayerAPI {
 		static internal IMainModCoreAPI CoreAPI;
 
-		public void OnInitializeMain(IMainModCoreAPI api) 
+		public void OnInitializeMain(IMainModCoreAPI api)
 			=> CoreAPI = api;
-		
+
 		public void OnDisposeMain() {
 			foreach (var data in Stores.ToArray())
 				data.Dispose(true);
@@ -51,7 +51,7 @@ namespace Nox.Players.Runtime {
 			return data;
 		}
 
-		internal static ITableAPI TableAPI 
+		internal static ITableAPI TableAPI
             => CoreAPI.ModAPI
 				.GetMod("tables")
 				?.GetInstance<ITableAPI>();
