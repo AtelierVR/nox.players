@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Nox.Players {
 	public interface IPlayer : IPlayer<IPart> { }
 
-	public interface IPlayer<TPart> : ILivingEntity, IMovingEntity, IMultiPartEntity<TPart>, ITeamEntity
+	public interface IPlayer<TPart> : ILivingEntity, IMovingEntity, IMultiPartEntity<TPart>, ITeamEntity, IPropertiesEntity, IPhysicalEntity
 		where TPart : IPart {
 		/// <summary>
 		/// Get the display name of the player.
@@ -30,6 +30,11 @@ namespace Nox.Players {
 		/// </summary>
 		/// <returns></returns>
 		public bool IsLocal { get; }
+
+		/// <summary>
+		/// Check if the player is privileged (master, moderator or owner of the room / world).
+		/// </summary>
+		public bool IsPrivileged { get; }
 
 		/// <summary>
 		/// Teleport the player to a specific position and rotation (immediately).
